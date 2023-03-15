@@ -12,13 +12,16 @@ pd.set_option("display.max_columns", None)
 
 data["Higgs boson"] = data["Higgs boson"].astype("category").cat.codes
 
+# convert mixed values to numeric values or Nan if n/a
 object_cols = data.select_dtypes(include=["object"])
 mixed_type_cols = object_cols.columns[object_cols.apply(pd.Series.nunique) > 1]
 
 for col in mixed_type_cols:
-    data[col] = pd.to_numeric(data[col], errors="coerce")
+    data[col] = pd.to_numeric(data[col].str.replace('"',''), errors="coerce")
 
-print(data.head())
+# drop null values
+data = data.dropna()
+
 print(data.shape)
 data.describe()
 

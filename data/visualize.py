@@ -20,6 +20,11 @@ def show_distribution(data, features, hue, rows=4, cols=7, bins=50):
     fig.set_tight_layout(True)
     plt.show()
 
+def show_heatmap(data):
+    correlation = data.corr()  
+    sns.heatmap(correlation, annot=True)  
+    plt.show()
+
 def print_distribution(data):
     print(data.describe())
 
